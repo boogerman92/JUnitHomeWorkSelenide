@@ -1,5 +1,6 @@
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -20,13 +21,13 @@ public class AppCardDelivery {
     public void shouldAppCard() {
         open("http://localhost:9999/");
         $("[data-test-id='city'] input").setValue("Москва");
-        String currentDate = generateDate(4, "dd.MM.yyyy");
-        $("[data-test-id='date' input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
-        $("[data-test-id='date' input").sendKeys(currentDate);
-        $("[data-test-id='name'] input").setValue("Иванов Иван");
+        String currentDate = generateDate(3, "dd.MM.yyyy");
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
+        $("[data-test-id='date'] input").sendKeys(currentDate);
+        $("[data-test-id='name'] input").setValue("иванов иван");
         $("[data-test-id='phone'] input").setValue("+71234567890");
         $("[data-test-id='agreement']").click();
-        $("[button button]").click();
+        $("button.button").click();
         $(".notification__content")
                 .shouldBe(Condition.visible, Duration.ofSeconds(15))
                 .shouldHave(Condition.exactText("Встреча успешно забронирована на " + currentDate));
